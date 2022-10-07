@@ -1,0 +1,13 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/CloudStorage/.vs/CloudStorage
+/CloudStorage/.vs/ProjectEvaluation
+/CloudStorage/CloudStorageBackend/obj
+/CloudStorage/CloudStorage/ClientApp/.angular/cache/13.3.4
+/CloudStorage/CloudStorage.DataAccess/bin/Debug/net6.0
+/CloudStorage/CloudStorage.DataAccess/obj
+/CloudStorage/CloudStorage.Domain/bin/Debug/net6.0
+/CloudStorage/CloudStorage.Domain/obj
