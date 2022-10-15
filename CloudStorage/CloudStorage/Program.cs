@@ -1,7 +1,14 @@
+using CloudStorage.DataAccess;
+using CloudStorage.Domain;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+var connectionString = builder.Configuration.GetConnectionString("AppDb");
+DataAccessServiceConfigurator.ConfigureServices(builder.Services, connectionString);
 
+DataAccessIocService.RegisterServices(builder.Services);
+BusinessLogicIocServices.RegisterServices(builder.Services);
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
