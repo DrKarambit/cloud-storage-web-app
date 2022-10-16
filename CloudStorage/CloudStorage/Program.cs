@@ -1,3 +1,4 @@
+using CloudStorage;
 using CloudStorage.DataAccess;
 using CloudStorage.Domain;
 
@@ -17,6 +18,8 @@ builder.Services.AddCors(options =>
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("AppDb");
 DataAccessServiceConfigurator.ConfigureServices(builder.Services, connectionString);
+
+builder.Services.AddAutoMapper(typeof(ApiAutoMapperConfiguration));
 
 DataAccessIocService.RegisterServices(builder.Services);
 BusinessLogicIocServices.RegisterServices(builder.Services);

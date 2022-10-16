@@ -41,12 +41,23 @@
                 {{row?.creationDateTime}}
             </ng-template>
         </ngx-datatable-column>
-        <ngx-datatable-column [flexGrow]="2">
+
+        <ngx-datatable-column name="Actions" [flexGrow]="2" [sortable]="false">
             <ng-template let-row="row" ngx-datatable-cell-template>
-                <button class="btn btn-primary details-action-button" type="button" (click)="DownloadFile(row?.id, row?.name)">
-                    <i class="fa-solid fa-image"></i>
-                    Download File
-                </button>
+                <div ngbDropdown container="body" class="d-inline-block">
+                    <button class="btn btn-primary btn-sm dropdown-toggle"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            ngbDropdownToggle>
+                        <i class="fa fa-cog mr-1"></i> Actions
+                    </button>
+                    <div ngbDropdownMenu>
+                        <button ngbDropdownItem (click)="DownloadFile(row?.id, row?.name)">
+                            Download
+                        </button>
+                    </div>
+                </div>
+
             </ng-template>
         </ngx-datatable-column>
     </ngx-datatable>
