@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpEventType } from '@angular/common/http';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { switchMap } from 'rxjs';
 import { CloudFile } from '../repositories/cloud-files.model';
 import { GenericHttpService } from '../repositories/generic-http-service';
+import { DownloadService, ProgressStatus, ProgressStatusEnum } from '../repositories/cloud-files-download.service';
 
 @Component({
   selector: 'app-cloud-files',
@@ -11,9 +13,15 @@ import { GenericHttpService } from '../repositories/generic-http-service';
 export class CloudFilesComponent implements OnInit 
 {
   public cloudFiles: CloudFile[] | undefined;
+
+  public downloadStatus: EventEmitter<ProgressStatus>;
   
   constructor(
-    private _genericHttpService: GenericHttpService) { }
+    private _genericHttpService: GenericHttpService,
+    private _downloadService: DownloadService) 
+  {
+    this.downloadStatus = new EventEmitter<ProgressStatus>();
+  }
 
   ngOnInit(): void 
   {
@@ -70,6 +78,50 @@ export class CloudFilesComponent implements OnInit
         // TODO: Errorhandling
       }
     }
+  }
+
+  public DownloadFile(guid: string, fileName: string) 
+  {
+    this.downloadStatus.emit(
+      {
+        status: ProgressStatusEnum.START
+      });
+
+    this._downloadService.DownloadFile(guid).subscribe(
+      data => {
+        switch (data.type) 
+        {
+          case HttpEventType.DownloadProgress:
+          {
+            this.downloadStatus.emit(
+            {
+              status: ProgressStatusEnum.IN_PROGRESS, percentage: Math.round((data.loaded / (data.total ?? 1)) * 100)
+            });
+
+            break;
+          }
+          case HttpEventType.Response:
+          {
+            this.downloadStatus.emit( 
+            {
+              status: ProgressStatusEnum.COMPLETE
+            });
+
+            const downloadedFile = new Blob([data.body ?? ""], { type: data.body?.type });
+            const a = document.createElement('a');
+            a.setAttribute('style', 'display:none;');
+            document.body.appendChild(a);
+            a.download = fileName;
+            a.href = URL.createObjectURL(downloadedFile);
+            a.target = '_blank';
+            a.click();
+            document.body.removeChild(a);
+
+            break;
+          }
+        }
+      }
+    );
   }
 
   private GenerateCloudFileFromSelectedFile(file: File, event: ProgressEvent<FileReader>) : CloudFile

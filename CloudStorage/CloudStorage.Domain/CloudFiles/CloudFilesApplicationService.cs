@@ -14,9 +14,26 @@
             await _cloudFilesRepository.CreateAsync(file);
         }
 
-        public List<CloudFile> GetAll()
+        public async Task<List<CloudFile>> GetAllAsync()
         {
-            return _cloudFilesRepository.GetAll();
+            return await _cloudFilesRepository.GetAllAsync();
+        }
+
+        public async Task<CloudFileDownloadModel> DownloadAsync(Guid fileId, string contentPathRoot)
+        {
+            var entity = await _cloudFilesRepository.GetByIdAsync(fileId);
+
+            var result = new CloudFileDownloadModel(null, string.Empty, string.Empty, false);
+            if (entity != null)
+            {
+                var memory = new MemoryStream();
+                memory.Write(entity.Content);
+                memory.Position = 0;
+
+                result = new CloudFileDownloadModel(memory, entity.Type, entity.Name, true);
+            }
+
+            return result;
         }
     }
 }

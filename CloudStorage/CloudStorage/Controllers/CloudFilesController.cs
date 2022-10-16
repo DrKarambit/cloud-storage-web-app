@@ -9,10 +9,14 @@ namespace CloudStorage.Controllers
     public class CloudFilesController : ControllerBase
     {
         private readonly ICloudFilesApplicationService _cloudFilesApplicationService;
+        private readonly IHostEnvironment _environment;
 
-        public CloudFilesController(ICloudFilesApplicationService cloudFilesApplicationService)
+        public CloudFilesController(
+            ICloudFilesApplicationService cloudFilesApplicationService,
+            IHostEnvironment environment)
         {
             _cloudFilesApplicationService = cloudFilesApplicationService;
+            _environment = environment;
         }
 
         [HttpPost]
@@ -22,9 +26,23 @@ namespace CloudStorage.Controllers
         }
 
         [HttpGet]
-        public List<CloudFile> GetAsync()
+        public async Task<List<CloudFile>> GetAllAsync()
         {
-            return _cloudFilesApplicationService.GetAll();
+            return await _cloudFilesApplicationService.GetAllAsync();
+        }
+
+        [HttpGet]
+        [Route("download")]
+        public async Task<IActionResult> DownloadAsync([FromQuery] Guid fileId)
+        {
+            var result = await _cloudFilesApplicationService.DownloadAsync(fileId, _environment.ContentRootPath);
+
+            if(!result.FileGenerationSuccess)
+            {
+                return NotFound();
+            }
+
+            return File(result.Stream, result.ContentType,result.FileName);
         }
     }
 }

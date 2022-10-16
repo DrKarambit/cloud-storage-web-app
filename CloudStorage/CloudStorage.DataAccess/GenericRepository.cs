@@ -1,4 +1,5 @@
 ﻿using CloudStorage.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace CloudStorage.DataAccess
 {
@@ -19,10 +20,16 @@ namespace CloudStorage.DataAccess
             return result;
         }
 
-        public List<TEntity> GetAll()
+        public Task<List<TEntity>> GetAllAsync()
         {
-            var result = context.Set<TEntity>().ToList();
+            var result = context.Set<TEntity>().ToListAsync();
             return result;
+        }
+
+        public Task<TEntity?> GetByIdAsync(Guid entityId)
+        {
+            var result = context.Set<TEntity>().FindAsync(entityId);
+            return result.AsTask();
         }
     }
 }
