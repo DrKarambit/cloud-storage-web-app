@@ -14,4 +14,9 @@ export class GenericHttpService
 	{
 		return this._http.get<TResponse>("https://localhost:7060/api/CloudFiles");
 	}
+
+    public Post<TRequest, TResponse>(request: TRequest): Observable<TResponse>
+    {
+        return this._http.post<TResponse>("https://localhost:7060/api/CloudFiles", request);
+    }
 }
