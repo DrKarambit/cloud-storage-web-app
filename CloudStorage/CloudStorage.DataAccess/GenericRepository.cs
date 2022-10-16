@@ -13,18 +13,8 @@ namespace CloudStorage.DataAccess
 
         public List<TEntity> GetAll()
         {
-            try
-            {
-                var result = context.Set<TEntity>().ToList();
-                return result;
-
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-
+            var result = context.Set<TEntity>().ToList();
+            return result;
         }
     }
 }
