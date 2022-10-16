@@ -18,7 +18,7 @@ namespace CloudStorage.DataAccess
         }
 
 
-        public DbSet<CloudFile> CloudFiles { get; set; };
+        public DbSet<CloudFile> CloudFiles { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -3,12 +3,24 @@ using CloudStorage.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var separatedAngularCorsPolicy = "_separatedAngularCorsPolicy";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(
+        name: separatedAngularCorsPolicy,
+        policy => 
+        {
+            policy.WithOrigins("https://localhost:44419");
+        });
+    });
+
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("AppDb");
 DataAccessServiceConfigurator.ConfigureServices(builder.Services, connectionString);
 
 DataAccessIocService.RegisterServices(builder.Services);
 BusinessLogicIocServices.RegisterServices(builder.Services);
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
@@ -24,6 +36,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
+app.UseCors(separatedAngularCorsPolicy);
 
 app.MapControllerRoute(
     name: "default",
