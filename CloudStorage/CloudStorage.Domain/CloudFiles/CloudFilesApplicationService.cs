@@ -9,6 +9,11 @@
             _cloudFilesRepository = cloudFilesRepository;
         }
 
+        public async Task CreateAsync(CloudFile file)
+        {
+            await _cloudFilesRepository.CreateAsync(file);
+        }
+
         public List<CloudFile> GetAll()
         {
             return _cloudFilesRepository.GetAll();

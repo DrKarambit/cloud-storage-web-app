@@ -1,5 +1,4 @@
 ﻿using CloudStorage.Domain.CloudFiles;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CloudStorage.Controllers
@@ -14,6 +13,12 @@ namespace CloudStorage.Controllers
         public CloudFilesController(ICloudFilesApplicationService cloudFilesApplicationService)
         {
             _cloudFilesApplicationService = cloudFilesApplicationService;
+        }
+
+        [HttpPost]
+        public async Task PostAsync(CloudFile request)
+        {
+            await _cloudFilesApplicationService.CreateAsync(request);
         }
 
         [HttpGet]

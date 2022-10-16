@@ -11,6 +11,14 @@ namespace CloudStorage.DataAccess
             this.context = context;
         }
 
+        public async Task<TEntity> CreateAsync(TEntity entity)
+        {
+            var result = context.Set<TEntity>().Add(entity).Entity;
+            await context.SaveChangesAsync();
+
+            return result;
+        }
+
         public List<TEntity> GetAll()
         {
             var result = context.Set<TEntity>().ToList();

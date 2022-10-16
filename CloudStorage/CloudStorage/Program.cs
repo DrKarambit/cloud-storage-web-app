@@ -10,7 +10,7 @@ builder.Services.AddCors(options =>
         name: separatedAngularCorsPolicy,
         policy => 
         {
-            policy.WithOrigins("https://localhost:44419");
+            policy.WithOrigins("https://localhost:44419", "https://localhost:7060").AllowAnyHeader();
         });
     });
 

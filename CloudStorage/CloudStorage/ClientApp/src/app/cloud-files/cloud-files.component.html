@@ -5,6 +5,15 @@
 <div class="border-top" style="margin-bottom: 1rem !important;">
 </div>
 
+<div class="form-group">
+    <input #fileInput hidden type="file" (change)="UploadFileInputChange($event)"/>
+
+    <button class="btn btn-primary details-action-button" type="button" (click)="fileInput.click()">
+        <i class="fa-solid fa-image"></i>
+        Upload File
+    </button>
+</div>
+
 <div class="col-md-12 mb-3" style="margin-top: 10px;">
     <ngx-datatable class="material container striped" [rows]="cloudFiles" [columnMode]="'flex'" [headerHeight]="50" [footerHeight]="50" rowHeight="auto">
         <ngx-datatable-column name="#" [flexGrow]="0.5">
