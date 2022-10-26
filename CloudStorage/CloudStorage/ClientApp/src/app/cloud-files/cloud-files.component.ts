@@ -1,7 +1,7 @@
 import { HttpEventType } from '@angular/common/http';
 import { Component, EventEmitter, OnInit } from '@angular/core';
 import { switchMap } from 'rxjs';
-import { CloudFile } from '../repositories/cloud-files.model';
+import { CloudFile, CreateUpdateCloudFileDto } from '../repositories/cloud-files.model';
 import { GenericHttpService } from '../repositories/generic-http-service';
 import { DownloadService, ProgressStatus, ProgressStatusEnum } from '../repositories/cloud-files-download.service';
 
@@ -59,7 +59,7 @@ export class CloudFilesComponent implements OnInit
         {
           let cloudFile = this.GenerateCloudFileFromSelectedFile(file, event);
 
-          this._genericHttpService.Post<any, CloudFile>(cloudFile)
+          this._genericHttpService.Post<CreateUpdateCloudFileDto, any>(cloudFile)
             .pipe(switchMap(() => { return this._genericHttpService.Get<CloudFile[]>()}))
             .subscribe((result) =>
             {
@@ -124,13 +124,12 @@ export class CloudFilesComponent implements OnInit
     );
   }
 
-  private GenerateCloudFileFromSelectedFile(file: File, event: ProgressEvent<FileReader>) : CloudFile
+  private GenerateCloudFileFromSelectedFile(file: File, event: ProgressEvent<FileReader>) : CreateUpdateCloudFileDto
   {
-    let result = new CloudFile();
+    let result = new CreateUpdateCloudFileDto();
     result.name= file.name;
     result.size = file.size;
     result.type = file.type;
-    result.creationDateTime = new Date();   // TODO!
     result.content = event?.target?.result?.toString().split(',')[1];
     return result;
   }

@@ -4,6 +4,7 @@ using CloudStorage.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CloudStorage.DataAccess.Migrations
 {
     [DbContext(typeof(CloudStorageDbContext))]
-    partial class CloudStorageDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221016201940_Added-Indentity-shema")]
+    partial class AddedIndentityshema
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,24 +87,9 @@ namespace CloudStorage.DataAccess.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "4a0955e3-a6d3-411b-afab-4cd4eb1a3638",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "4bbef09b-5cc3-4d03-9415-af7e868f8c05",
-                            Email = "admin@admin.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            PasswordHash = "AKW8UTNUqktMXain78dZn5KZnwzbDUdM1JgWwJshlHDaV5Ni25Dhq1rrbuWz+C5U0A==",
-                            PhoneNumberConfirmed = false,
-                            TwoFactorEnabled = false,
-                            UserName = "Admin"
-                        });
                 });
 
-            modelBuilder.Entity("CloudStorage.Domain.Authentication.Role", b =>
+            modelBuilder.Entity("CloudStorage.DataAccess.Role", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -1344,7 +1331,7 @@ namespace CloudStorage.DataAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("CloudStorage.Domain.Authentication.Role", null)
+                    b.HasOne("CloudStorage.DataAccess.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1371,7 +1358,7 @@ namespace CloudStorage.DataAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.HasOne("CloudStorage.Domain.Authentication.Role", null)
+                    b.HasOne("CloudStorage.DataAccess.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)

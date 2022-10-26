@@ -8,7 +8,10 @@ namespace CloudStorage
     {
         public ApiAutoMapperConfiguration()
         {
-            CreateMap<CloudFileDto, CloudFile>();
+            CreateMap<CreateUpdateCloudFileDto, CloudFile>()
+                .ForMember(dst => dst.Id, opt => opt.Ignore())
+                .ForMember(dst => dst.CreationDateTime, opt => opt.Ignore());
+
             CreateMap<CloudFile, CloudFileDto>();
         }
     }

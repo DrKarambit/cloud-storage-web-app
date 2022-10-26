@@ -25,7 +25,7 @@ namespace CloudStorage.Controllers
         }
 
         [HttpPost]
-        public async Task PostAsync(CloudFileDto request)
+        public async Task PostAsync(CreateUpdateCloudFileDto request)
         {
             var cloudFile = _mapper.Map<CloudFile>(request);
             await _cloudFilesApplicationService.CreateAsync(cloudFile);
