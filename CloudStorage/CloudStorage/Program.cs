@@ -64,9 +64,9 @@ app.UseRouting();
 
 app.UseCors(separatedAngularCorsPolicy);
 
-app.UseAuthentication();
-app.UseIdentityServer();
-app.UseAuthorization();
+//app.UseAuthentication();
+//app.UseIdentityServer();
+//app.UseAuthorization();
 
 app.MapControllerRoute(
         name: "default",

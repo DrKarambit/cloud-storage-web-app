@@ -3,6 +3,7 @@ using Duende.IdentityServer.EntityFramework.Entities;
 using Duende.IdentityServer.EntityFramework.Extensions;
 using Duende.IdentityServer.EntityFramework.Interfaces;
 using Duende.IdentityServer.EntityFramework.Options;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -58,6 +59,19 @@ namespace CloudStorage.DataAccess
             {
                 b.ToTable(string.Concat(nameof(CloudFile), "s"));
             });
+
+
+            var admin = new ApplicationUser()
+            {
+                Id = Guid.NewGuid().ToString(),
+                UserName = "Admin",
+                Email = "admin@admin.com",
+            };
+
+            var x = new PasswordHasher().HashPassword("Asdf1234;");
+            admin.PasswordHash = x;
+
+            builder.Entity<ApplicationUser>().HasData(admin);
         }
     }
 }
