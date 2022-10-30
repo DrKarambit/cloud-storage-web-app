@@ -14,3 +14,8 @@ export class CreateUpdateCloudFileDto
     type : string | undefined;
     content?: string;
 }
+
+export class RemoveFile
+{
+    id: string | undefined;
+}

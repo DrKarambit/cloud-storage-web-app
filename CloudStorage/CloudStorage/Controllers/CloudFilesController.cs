@@ -23,7 +23,6 @@ namespace CloudStorage.Controllers
             _cloudFilesApplicationService = cloudFilesApplicationService;
             _environment = environment;
         }
-
         [HttpPost]
         public async Task PostAsync(CreateUpdateCloudFileDto request)
         {
@@ -31,13 +30,19 @@ namespace CloudStorage.Controllers
             await _cloudFilesApplicationService.CreateAsync(cloudFile);
         }
 
+        [HttpPost]
+        [Route("delete")]
+        public async Task RemoveAsync(RemoveFileDto request)
+        {
+            var cloudFile = request ;
+            await _cloudFilesApplicationService.RemoveAsync(cloudFile.Id);
+        
+        }
         [HttpGet]
         public async Task<List<CloudFileDto>> GetAllAsync()
         {
             var domainResult = await _cloudFilesApplicationService.GetAllAsync();
-
             var result = _mapper.Map<List<CloudFileDto>>(domainResult);
-
             return result;
         }
 

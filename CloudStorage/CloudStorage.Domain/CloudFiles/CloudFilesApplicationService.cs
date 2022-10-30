@@ -35,5 +35,20 @@
 
             return result;
         }
+
+        public async Task<CloudFileRemoveModel> RemoveAsync(Guid fileId)
+        {
+            var entity = await _cloudFilesRepository.GetByIdAsync(fileId);
+
+            var result = new CloudFileRemoveModel(Guid.Empty, false);
+
+            if (entity != null)
+            {
+                await _cloudFilesRepository.RemoveAsync(entity);
+                result = new CloudFileRemoveModel(entity.Id, true);     
+            }
+            return result;
+
+        }
     }
 }
