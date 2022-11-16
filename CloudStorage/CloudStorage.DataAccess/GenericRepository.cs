@@ -19,6 +19,13 @@ namespace CloudStorage.DataAccess
 
             return result;
         }
+        public async Task<TEntity> RemoveAsync(TEntity entity)
+        {
+            var result = context.Remove(entity).Entity;
+            await context.SaveChangesAsync();
+            
+            return result;
+        }
 
         public Task<List<TEntity>> GetAllAsync()
         {

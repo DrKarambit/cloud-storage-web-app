@@ -5,5 +5,6 @@
         Task<TEntity> CreateAsync(TEntity entity);
         Task<TEntity?> GetByIdAsync(Guid entityId);
         Task<List<TEntity>> GetAllAsync();
+        Task<TEntity> RemoveAsync(TEntity entity);
     }
 }
