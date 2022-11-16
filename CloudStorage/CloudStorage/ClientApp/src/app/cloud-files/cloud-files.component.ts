@@ -5,6 +5,7 @@ import { CloudFile, CreateUpdateCloudFileDto, RemoveFile } from '../repositories
 import { GenericHttpService } from '../repositories/generic-http-service';
 import { DownloadService, ProgressStatus, ProgressStatusEnum } from '../repositories/cloud-files-download.service';
 
+
 @Component({
   selector: 'app-cloud-files',
   templateUrl: './cloud-files.component.html',
@@ -22,11 +23,11 @@ export class CloudFilesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this._genericHttpService.Get<CloudFile[]>().subscribe((result) => {
       this.cloudFiles = result;
     });
   }
-
 
   public DataTableOnActivate(event: any): void {
   }
@@ -114,7 +115,7 @@ export class CloudFilesComponent implements OnInit {
 
     let result = new RemoveFile();
     result.id = guid;
-   
+
     this._genericHttpService.Delete<RemoveFile, any>(result)
       .pipe(switchMap(() => { return this._genericHttpService.Get<CloudFile[]>() }))
       .subscribe((result) => {
@@ -122,6 +123,59 @@ export class CloudFilesComponent implements OnInit {
         this.cloudFiles = result;
       });
     return result;
+  }
+
+  public ViewFile(guid: string, type: string, fileName: string) {
+
+    if (type == "application/pdf") {
+      //TODO: Code reusing!
+      this.downloadStatus.emit(
+        {
+          status: ProgressStatusEnum.START
+        });
+
+      this._downloadService.DownloadFile(guid).subscribe(
+        data => {
+          switch (data.type) {
+            case HttpEventType.DownloadProgress:
+              {
+                this.downloadStatus.emit(
+                  {
+                    status: ProgressStatusEnum.IN_PROGRESS, percentage: Math.round((data.loaded / (data.total ?? 1)) * 100)
+                  });
+
+                break;
+              }
+            case HttpEventType.Response:
+              {
+                this.downloadStatus.emit(
+                  {
+                    status: ProgressStatusEnum.COMPLETE
+                  });
+
+                const viewFile = new Blob([data.body ?? ""], { type: data.body?.type });
+                var blobURL = URL.createObjectURL(viewFile);
+                window.open(blobURL);
+
+                break;
+              }
+          }
+        }
+      );
+    }
+    else {
+      //TODO: Error handling ?
+    }
+
+  }
+
+  public Validation(type: string) {
+    if (type == "application/pdf") {
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 
   private GenerateCloudFileFromSelectedFile(file: File, event: ProgressEvent<FileReader>): CreateUpdateCloudFileDto {
@@ -132,4 +186,5 @@ export class CloudFilesComponent implements OnInit {
     result.content = event?.target?.result?.toString().split(',')[1];
     return result;
   }
+  
 }
