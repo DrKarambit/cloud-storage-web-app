@@ -1,8 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 
+@import url('https://fonts.googleapis.com/css2?family=Poppins&family=Roboto&display=swap');
+
 /* Provide sufficient contrast against white background */
 a {
   color: #0366d6;
+  text-decoration: none;
 }
 
 code {
@@ -13,4 +16,12 @@ code {
   color: #fff;
   background-color: #1b6ec2;
   border-color: #1861ac;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+html {
+	margin: 0;
 }
