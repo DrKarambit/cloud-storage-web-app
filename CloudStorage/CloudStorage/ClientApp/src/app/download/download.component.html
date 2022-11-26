@@ -1,0 +1,41 @@
+<div>
+  <h1>Share link</h1>
+</div>
+
+<div class="border-top" style="margin-bottom: 1rem !important;">
+</div>
+
+<div class="col-md-12 mb-3" style="margin-top: 10px;">
+  <ngx-datatable class="material container striped" [rows]="sharedFile" [columnMode]="'flex'" [headerHeight]="50" [footerHeight]="50" rowHeight="auto">
+    <ngx-datatable-column name="#" [flexGrow]="0.5">
+      <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+        {{(rowIndex + 1)}}
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Name" [flexGrow]="2">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{ row?.fileName | titlecase }}
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Size" [flexGrow]="2">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{row?.fileSize}}
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Type" [flexGrow]="2">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{row?.fileType}}
+      </ng-template>
+    </ngx-datatable-column>
+
+
+    <ngx-datatable-column name="Actions" [flexGrow]="2" [sortable]="false">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        <button class="btn btn-primary details-action-button" type="button" (click)="ShareLinkDownload(row?.fileID, row?.fileName)">
+          <i class="fa-solid fa-image"></i>
+          Download
+          </button>
+      </ng-template>
+    </ngx-datatable-column>
+  </ngx-datatable>
+</div>

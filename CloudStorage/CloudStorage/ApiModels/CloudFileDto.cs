@@ -1,4 +1,6 @@
-﻿namespace CloudStorage.ApiModels
+﻿using CloudStorage.DataAccess.Migrations;
+
+namespace CloudStorage.ApiModels
 {
     public class CloudFileDto
     {
@@ -7,5 +9,6 @@
         public double Size { get; set; }
         public string? Type { get; set; }
         public DateTime CreationDateTime { get; set; }
+        public string? SharingLink { get; set; }
     }
 }

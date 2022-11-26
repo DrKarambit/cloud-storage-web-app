@@ -11,7 +11,8 @@ namespace CloudStorage
         {
             CreateMap<CreateUpdateCloudFileDto, CloudFile>()
                 .ForMember(dst => dst.Id, opt => opt.Ignore())
-                .ForMember(dst => dst.CreationDateTime, opt => opt.Ignore());
+                .ForMember(dst => dst.CreationDateTime, opt => opt.Ignore())
+                .ForMember(dst => dst.SharingLink, opt => opt.Ignore());
 
             CreateMap<CloudFile, CloudFileDto>();
 

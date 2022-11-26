@@ -38,6 +38,15 @@ namespace CloudStorage.Controllers
             await _cloudFilesApplicationService.RemoveAsync(cloudFile.Id);
         
         }
+        [HttpPost]
+        [Route("updatelink")]
+        public async Task UpdateLinkAsync(UpdateLinkDto request)
+        {
+            var cloudFile = request;
+            await _cloudFilesApplicationService.UpdateLinkAsync(cloudFile.Id, cloudFile.isNull);
+        }
+
+
         [HttpGet]
         public async Task<List<CloudFileDto>> GetAllAsync()
         {
@@ -58,6 +67,24 @@ namespace CloudStorage.Controllers
             }
 
             return File(result.Stream, result.ContentType,result.FileName);
+        }
+
+        [HttpGet]
+        [Route("getguid")]
+        public async Task<GetGuidModel> GetGuidAsync(Guid sharingLink)
+        {
+            var result = await _cloudFilesApplicationService.GetGuidAsync(sharingLink);
+
+            if(result != null)
+            {
+                return result;
+            }
+            else
+            {
+                //Error handl.
+                return result;
+            }
+            
         }
     }
 }

@@ -9,13 +9,15 @@ import { HomeComponent } from './home/home.component';
 import { CloudFilesComponent } from './cloud-files/cloud-files.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { DownloadComponent } from './download/download.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    CloudFilesComponent
+    CloudFilesComponent,
+    DownloadComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -24,7 +26,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NgxDatatableModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'cloud-files', component: CloudFilesComponent, pathMatch: 'full' }
+      { path: 'cloud-files', component: CloudFilesComponent, pathMatch: 'full' },
+      { path: 'download/:route', component: DownloadComponent }
     ]),
     NgbModule
   ],

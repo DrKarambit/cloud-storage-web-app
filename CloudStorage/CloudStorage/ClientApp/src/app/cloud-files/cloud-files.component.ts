@@ -1,18 +1,21 @@
 import { HttpEventType } from '@angular/common/http';
 import { Component, EventEmitter, OnInit } from '@angular/core';
 import { switchMap } from 'rxjs';
-import { CloudFile, CreateUpdateCloudFileDto, RemoveFile } from '../repositories/cloud-files.model';
+import { CloudFile, CreateUpdateCloudFileDto, RemoveFile, UpdateLink, GetGUID } from '../repositories/cloud-files.model';
 import { GenericHttpService } from '../repositories/generic-http-service';
 import { DownloadService, ProgressStatus, ProgressStatusEnum } from '../repositories/cloud-files-download.service';
+import { Injectable } from "@angular/core";
+import { UrlSerializer } from '@angular/router';
 
 @Component({
   selector: 'app-cloud-files',
   templateUrl: './cloud-files.component.html',
   styleUrls: ['./cloud-files.component.css']
 })
-export class CloudFilesComponent implements OnInit {
-  public cloudFiles: CloudFile[] | undefined;
 
+@Injectable({ providedIn: 'root' })
+export class CloudFilesComponent implements OnInit{
+  public cloudFiles: CloudFile[] | undefined;
   public downloadStatus: EventEmitter<ProgressStatus>;
 
   constructor(
@@ -67,7 +70,7 @@ export class CloudFilesComponent implements OnInit {
       }
     }
   }
-
+  
   public DownloadFile(guid: string, fileName: string) {
     this.downloadStatus.emit(
       {
@@ -114,7 +117,7 @@ export class CloudFilesComponent implements OnInit {
 
     let result = new RemoveFile();
     result.id = guid;
-   
+
     this._genericHttpService.Delete<RemoveFile, any>(result)
       .pipe(switchMap(() => { return this._genericHttpService.Get<CloudFile[]>() }))
       .subscribe((result) => {
@@ -122,6 +125,39 @@ export class CloudFilesComponent implements OnInit {
         this.cloudFiles = result;
       });
     return result;
+  }
+
+  public isEmpty(sharingLink: string) {
+    if (sharingLink != null) {
+      return false;
+    }
+    else {
+      return true;
+    }
+  }
+
+  public CreateRemoveShare(guid: string, isNull: boolean): UpdateLink {
+    
+    let result = new UpdateLink();
+    result.id = guid;
+    result.isNull = isNull;
+
+      this._genericHttpService.UpdateLink<UpdateLink, any>(result)
+        .pipe(switchMap(() => { return this._genericHttpService.Get<CloudFile[]>() }))
+        .subscribe((result) => {
+          console.log(result);
+          this.cloudFiles = result;
+        });
+
+    return result;
+
+  }
+
+  public ShowShare(shareLink: string) {
+    var baseURL = window.location.protocol + '//' + window.location.host;
+    var message = 'A file megosztási linkje: ' + baseURL + '/download/' + shareLink;
+    alert(message);
+
   }
 
   private GenerateCloudFileFromSelectedFile(file: File, event: ProgressEvent<FileReader>): CreateUpdateCloudFileDto {

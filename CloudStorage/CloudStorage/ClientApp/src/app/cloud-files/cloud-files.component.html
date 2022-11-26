@@ -58,6 +58,18 @@
                         <button ngbDropdownItem (click)="RemoveFile(row?.id)">
                             Remove
                         </button>
+                        <div ngbDropdownMenu>
+                          <label ngbDropdownItem [disabled]="true" class="dropDownLabel">Sharing link</label>
+                          <button ngbDropdownItem [disabled]="!isEmpty(row?.sharingLink)" (click)="CreateRemoveShare(row?.id, true)">
+                            Create
+                          </button>
+                          <button ngbDropdownItem [disabled]="isEmpty(row?.sharingLink)" (click)="CreateRemoveShare(row?.id, false)">
+                            Remove
+                          </button>
+                          <button ngbDropdownItem [disabled]="isEmpty(row?.sharingLink)" (click)="ShowShare(row?.sharingLink)">
+                            Show
+                          </button>
+                        </div>
                     </div>
                 </div>
 

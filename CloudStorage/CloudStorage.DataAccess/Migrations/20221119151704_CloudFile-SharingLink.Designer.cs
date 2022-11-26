@@ -4,6 +4,7 @@ using CloudStorage.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CloudStorage.DataAccess.Migrations
 {
     [DbContext(typeof(CloudStorageDbContext))]
-    partial class CloudStorageDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221119151704_CloudFile-SharingLink")]
+    partial class CloudFileSharingLink
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -89,13 +91,13 @@ namespace CloudStorage.DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "4a0955e3-a6d3-411b-afab-4cd4eb1a3638",
+                            Id = "c7c4de40-1673-4caa-b844-6e5e7873db66",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4bbef09b-5cc3-4d03-9415-af7e868f8c05",
+                            ConcurrencyStamp = "e631c135-95ed-410a-b967-18e551ab2be9",
                             Email = "admin@admin.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AKW8UTNUqktMXain78dZn5KZnwzbDUdM1JgWwJshlHDaV5Ni25Dhq1rrbuWz+C5U0A==",
+                            PasswordHash = "ABnVmIhQkZl6QQZZ0myl9YJDyNzxjPizWaIY7GlUXN2Nu2mdSFs7CqgDNcr/27w74g==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "Admin"

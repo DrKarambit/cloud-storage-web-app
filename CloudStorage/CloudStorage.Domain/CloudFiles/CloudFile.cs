@@ -9,7 +9,9 @@
         public DateTime CreationDateTime { get; private set; }
         public byte[] Content { get; private set; }
 
-        public CloudFile(string name, double size, string type, byte[] content)
+        public string? SharingLink { get;  set; }
+
+        public CloudFile(string name, double size, string type, byte[] content, string? sharingLink = null)
         {
             Id = Guid.NewGuid();
             Name = name;
@@ -17,6 +19,7 @@
             Type = type;
             CreationDateTime = DateTime.Now;
             Content = content;
+            SharingLink = sharingLink;
         }
     }
 }

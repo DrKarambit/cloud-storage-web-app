@@ -11,3 +11,4 @@
 /CloudStorage/CloudStorage.DataAccess/obj
 /CloudStorage/CloudStorage.Domain/bin/Debug/net6.0
 /CloudStorage/CloudStorage.Domain/obj
+/CloudStorage/CloudStorage.DataAccess/Migrations/CloudStorageDbContextModelSnapshot.cs

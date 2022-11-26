@@ -24,5 +24,11 @@ export class GenericHttpService
       return this._http.post<TResponse>("https://localhost:7060/api/CloudFiles/delete", request);
 
     }
-
+    public UpdateLink<TRequest, TResponse>(request: TRequest): Observable<TResponse> {
+      console.log("generic-http-service.ts")
+      return this._http.post<TResponse>("https://localhost:7060/api/CloudFiles/updatelink", request);
+    }
+      public GetGUID<TResponse>(request: string): Observable<TResponse> {
+      return this._http.get<TResponse>("https://localhost:7060/api/CloudFiles/getguid?sharingLink="+request);
+    }
 }
