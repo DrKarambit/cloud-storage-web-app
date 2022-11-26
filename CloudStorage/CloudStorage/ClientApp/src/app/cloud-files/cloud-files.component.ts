@@ -169,7 +169,7 @@ export class CloudFilesComponent implements OnInit {
 
   }
 
-  public Validation(type: string) {
+  public IsViewableFile(type: string) {
     if (type == "application/pdf") {
       return true;
     }

@@ -58,7 +58,7 @@
                         <button ngbDropdownItem (click)="RemoveFile(row?.id)">
                             Remove
                         </button>
-                        <button ngbDropdownItem (click)="ViewFile(row?.id, row?.type, row?.name)" [disabled]="!Validation(row?.type)">
+                        <button ngbDropdownItem (click)="ViewFile(row?.id, row?.type, row?.name)" [disabled]="!IsViewableFile(row?.type)">
                             View
                         </button>
                     </div>
